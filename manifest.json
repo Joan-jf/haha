@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "Phishing Mail Detector",
+  "version": "1.0",
+  "description": "Detect phishing emails using a Flask API",
+  "permissions": [
+  "notifications",
+  "contextMenus",
+  "activeTab",
+  "http://localhost:5000/*",
+  "https://mail.google.com/*"
+]
+,
+  "background": {
+    "scripts": ["background.js"], 
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "icons/phishing_9967065.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}

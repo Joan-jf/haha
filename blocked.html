@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blocked Emails - Stinky Phishing Detector</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <script>
+      // Function to load blocked URLs from local storage
+      window.onload = function () {
+        let blockedUrls = JSON.parse(localStorage.getItem("blockedUrls")) || [];
+        let tableBody = document.getElementById("blocked-urls");
+
+        // Populate the table with blocked URLs
+        blockedUrls.forEach((url) => {
+          let row = tableBody.insertRow();
+          let cell1 = row.insertCell(0);
+          let cell2 = row.insertCell(1);
+          cell1.textContent = url;
+          cell2.innerHTML =
+            '<button class="unblock-btn" onclick="unblockUrl(\'' +
+            url +
+            "')\">Unblock</button>";
+        });
+      };
+
+      // Function to unblock a URL
+      function unblockUrl(url) {
+        let blockedUrls = JSON.parse(localStorage.getItem("blockedUrls")) || [];
+        blockedUrls = blockedUrls.filter((item) => item !== url);
+        localStorage.setItem("blockedUrls", JSON.stringify(blockedUrls));
+        alert(url + " has been removed from the blocklist!");
+        location.reload(); // Reload the page to update the list
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar" id="sidebar">
+  <div class="profile">
+    <img src="icons/logo.jpeg" alt="Profile Image" class="profile-img">
+      <h2>Stinky</h2>
+  </div>
+  
+  <ul class="menu">
+      <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+      
+      <!-- Settings Header -->
+      <h3>Settings</h3>
+      <li><a href="history.html"><i class="fas fa-history"></i>History</a></li>
+      <li><a href="blocked.html"><i class="fas fa-ban"></i>Blocked</a></li>
+  </ul>
+  
+  <ul class="submenu">
+      <!-- Helps Header -->
+      <h3>Help</h3>
+      <li><a href="about us.html"><i class="fas fa-info-circle"></i>About Us</a></li>
+      <li><a href="faqs.html"><i class="fas fa-question-circle"></i>FAQs</a></li>
+  </ul>
+</div>
+      <div class="main-content">
+        <header>
+          <h1>Blocked</h1>
+        </header>
+        <table>
+          <thead>
+            <tr>
+              <th>URL</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="blocked-urls">
+            <!-- Blocked URLs will be populated here -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

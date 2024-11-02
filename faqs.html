@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ Boxes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" /> <!-- Font Awesome for icons -->
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    background-image: url('icons/faqs.jpg'); /* Your background image */
+    background-size: cover; /* Makes the background image cover the entire body */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Center content vertically */
+    align-items: center; /* Center content horizontally */
+    height: 100vh; /* Full viewport height */
+    margin: 0; /* Remove default margin */
+}
+
+
+        #searchInput {
+            width: 50%; /* Set width of the search box */
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #a0522d; /* Maroon border */
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+        }
+
+        .faq-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 boxes in a row for better fit */
+            gap: 20px; /* Space between boxes */
+            width: 100%; /* Full width of the container */
+            max-width: 1200px; /* Max width for large screens */
+            margin-bottom: 40px; /* Space below the container */
+        }
+
+        .faq-item {
+            border: 1px solid #ddd; /* Border around the box */
+            border-radius: 5px; /* Rounded corners */
+            padding: 15px; /* Inner spacing */
+            background-color: #ffffff; /* White background for contrast */
+            transition: background-color 0.3s; /* Smooth background color change */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+            text-align: center; /* Center align text */
+        }
+
+        .faq-item:hover {
+            background-color: #f1f1f1; /* Change background color on hover */
+        }
+
+        .faq-question {
+            cursor: pointer; /* Indicate that the question is clickable */
+            font-weight: bold; /* Make the question text bold */
+            color: #a0522d; /* Maroon color for question text */
+        }
+
+        .faq-answer {
+            margin-top: 10px; /* Space above the answer */
+            display: none; /* Initially hide answers */
+            color: #333; /* Darker text for answers */
+        }
+
+        #paginationControls {
+            margin-top: 20px; /* Space above pagination controls */
+            text-align: center; /* Center align pagination controls */
+        }
+
+        #prevBtn, #nextBtn {
+            background-color: #a0522d; /* Maroon background for buttons */
+            color: #fff; /* White text for buttons */
+            border: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background-color 0.3s; /* Smooth transition */
+        }
+
+        #prevBtn:hover, #nextBtn:hover {
+            background-color: #ffb702; /* Darker maroon on hover */
+        }
+
+        #pageInfo {
+            margin: 0 15px; /* Margin around page info */
+        }
+        #dashboardLink {
+    font-size: 18px;
+    color: #ffffff;
+    background-color: #ad0522;
+    position: absolute; /* Use absolute positioning */
+    top: 20px; /* Set the distance from the top */
+    left: 15%; /* Adjust the left position as needed */
+    padding: 10px 15px;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+        #dashboardLink:hover {
+            background-color: #ffb702; /* Darker maroon on hover */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Dashboard Link -->
+    <a href="dashboard.html" id="dashboardLink">
+        <i class="fas fa-home"></i> Dashboard
+    </a>
+    
+    <input type="text" id="searchInput" onkeyup="filterFAQs()" placeholder="Search FAQs...">
+    
+    <div id="faqContainer" class="faq-container"></div>
+    <div id="paginationControls">
+        <button id="prevBtn" onclick="changePage(-1)">Previous</button>
+        <span id="pageInfo"></span>
+        <button id="nextBtn" onclick="changePage(1)">Next</button>
+    </div>
+
+    <script>
+        const faqs = [
+            { question: "What is a phishing attempt?", answer: "A phishing attempt is a fraudulent attempt to obtain sensitive information by disguising as a trustworthy entity in electronic communications." },
+            { question: "How do I know if an email is phishing?", answer: "Look for signs such as poor grammar, urgent requests for personal information, and suspicious links." },
+            { question: "What should I do if I accidentally clicked on a phishing link?", answer: "Immediately change your passwords and monitor your accounts for any suspicious activity." },
+            { question: "Can spam detection be used on other platforms?", answer: "Yes, our spam detection technology can be integrated with various email clients and platforms." },
+            { question: "Where can I find additional support?", answer: "You can visit our support page or contact our help desk for further assistance." },
+            { question: "What are some common signs of phishing?", answer: "Unusual sender addresses, requests for personal information, and unexpected attachments are common signs." },
+            { question: "Is it safe to click on links in emails?", answer: "Be cautious; always verify the sender and check the link URL before clicking." },
+            { question: "How can I protect myself from phishing?", answer: "Use security software, enable two-factor authentication, and educate yourself about phishing techniques." },
+            { question: "What should I do if I receive a suspicious email?", answer: "Do not click any links or download attachments; report it to your email provider." },
+            { question: "Are phishing attempts only done via email?", answer: "No, phishing can occur through social media, text messages, and phone calls as well." },
+            { question: "What is spear phishing?", answer: "Spear phishing is a targeted attempt to steal sensitive information from a specific individual, often for malicious reasons." },
+            { question: "What is whaling in phishing?", answer: "Whaling is a type of phishing attack that specifically targets high-profile individuals like executives." },
+            { question: "How can I identify a suspicious link?", answer: "Hover over the link to see the actual URL; if it looks suspicious or does not match the expected domain, avoid clicking." },
+            { question: "What should I do if I think I've been phished?", answer: "Report the incident to your IT department or email provider and change your passwords immediately." },
+            { question: "Can antivirus software detect phishing attempts?", answer: "Some antivirus software can identify and block phishing websites, but user vigilance is also crucial." },
+            { question: "Is it possible to recover stolen information?", answer: "It depends on the situation; act quickly to minimize damage and contact your financial institutions for help." },
+            { question: "How often should I change my passwords?", answer: "It's advisable to change your passwords regularly and use unique passwords for different accounts." },
+            { question: "What role does two-factor authentication play?", answer: "Two-factor authentication adds an extra layer of security, making it harder for attackers to gain access." },
+            { question: "How can social engineering lead to phishing?", answer: "Attackers may manipulate individuals into revealing personal information, which can then be used in phishing attacks." },
+            { question: "What are the legal consequences of phishing?", answer: "Phishing is illegal and can lead to severe penalties, including fines and imprisonment." },
+            { question: "Are there any phishing training programs?", answer: "Yes, many organizations offer training programs to help employees recognize and respond to phishing attempts." },
+            { question: "How can I educate others about phishing?", answer: "Share information, provide training sessions, and encourage others to report suspicious activities." },
+            { question: "What is a phishing kit?", answer: "A phishing kit is a collection of software tools used by cybercriminals to launch phishing attacks." },
+            { question: "What is the purpose of a phishing website?", answer: "A phishing website is designed to mimic a legitimate site to steal sensitive information like usernames and passwords." },
+            { question: "How can I recognize a phishing email?", answer: "Look for inconsistencies in the sender's address, poor spelling, generic greetings, and unexpected attachments or links." },
+            { question: "What should I do if I receive a phishing email?", answer: "Do not respond, click any links, or download attachments. Instead, report it to your email provider and delete it." },
+            { question: "Can phishing affect organizations of any size?", answer: "Yes, phishing attacks can target individuals and organizations of all sizes, making it a widespread threat." },
+            { question: "What tools can help me identify phishing attempts?", answer: "Anti-phishing software, browser extensions, and security suites can help identify and block phishing attempts." },
+            { question: "Can phishing occur through phone calls?", answer: "Yes, phone phishing, or vishing, occurs when attackers call and pose as legitimate entities to extract sensitive information." },
+            { question: "What is the impact of phishing on businesses?", answer: "Phishing can lead to financial loss, data breaches, and damage to a company's reputation." },
+            { question: "How do I report phishing attempts?", answer: "Report phishing emails to your email provider and notify the authorities if necessary." },
+            { question: "What is the future of phishing attacks?", answer: "Phishing tactics will likely continue to evolve as technology and security measures improve." },
+            { question: "What resources can help with phishing education?", answer: "Resources include government websites, cybersecurity organizations, and online training modules." },
+            { question: "How can I stay updated on phishing threats?", answer: "Follow cybersecurity blogs, subscribe to alerts from security organizations, and participate in training sessions." },
+            { question: "Is it possible to automate phishing detection?", answer: "Yes, various tools and software can automatically detect and alert users about potential phishing threats." },
+            { question: "What is the role of machine learning in phishing detection?", answer: "Machine learning can analyze patterns and behaviors to improve the detection of phishing attempts." },
+            { question: "How do hackers use social media for phishing?", answer: "Hackers can impersonate trusted contacts or companies on social media to trick users into revealing information." },
+            { question: "What are some effective phishing prevention strategies?", answer: "Implementing strong security policies, training staff, and using technology can help prevent phishing." },
+            { question: "How do I create strong passwords?", answer: "Use a combination of upper and lower case letters, numbers, and symbols; aim for at least 12 characters." },
+            { question: "Can phishing affect my personal devices?", answer: "Yes, phishing can compromise personal devices and lead to data breaches or identity theft." },
+            { question: "What is the difference between phishing and spear phishing?", answer: "Phishing is a broad attempt to deceive many users, while spear phishing targets specific individuals." },
+            { question: "What should I do if I suspect an internal phishing attack?", answer: "Report it to your IT department and follow your organization's protocols for addressing security threats." },
+            { question: "How does phishing relate to identity theft?", answer: "Phishing often aims to steal personal information that can be used for identity theft." },
+            { question: "What is a bait and switch in phishing?", answer: "A bait and switch is a tactic where users are lured in with an enticing offer that leads to phishing." },
+            { question: "What is the best defense against phishing?", answer: "Education and awareness among users, combined with robust security measures, are the best defenses." },
+        ];
+
+        let currentPage = 1;
+        const itemsPerPage = 9; // Change to 9 items per page
+
+        function displayFAQs() {
+            const faqContainer = document.getElementById('faqContainer');
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+
+            // Filter FAQs based on search input
+            const searchValue = document.getElementById('searchInput').value.toLowerCase();
+            const filteredFAQs = faqs.filter(faq => faq.question.toLowerCase().includes(searchValue));
+
+            // Display the relevant FAQs based on current page
+            faqContainer.innerHTML = '';
+            const paginatedFAQs = filteredFAQs.slice(startIndex, endIndex);
+            paginatedFAQs.forEach((faq, index) => {
+                const faqItem = document.createElement('div');
+                faqItem.classList.add('faq-item');
+                faqItem.innerHTML = `
+                    <div class="faq-question" onclick="toggleAnswer(${index})">${faq.question}</div>
+                    <div class="faq-answer">${faq.answer}</div>
+                `;
+                faqContainer.appendChild(faqItem);
+            });
+
+            updatePagination(filteredFAQs.length);
+        }
+
+        function toggleAnswer(index) {
+            const answers = document.querySelectorAll('.faq-answer');
+            answers[index].style.display = answers[index].style.display === 'block' ? 'none' : 'block';
+        }
+
+        function updatePagination(totalItems) {
+            const pageCount = Math.ceil(totalItems / itemsPerPage);
+            document.getElementById('pageInfo').innerText = `Page ${currentPage} of ${pageCount}`;
+
+            document.getElementById('prevBtn').disabled = currentPage === 1; // Disable if on first page
+            document.getElementById('nextBtn').disabled = currentPage === pageCount; // Disable if on last page
+        }
+
+        function changePage(direction) {
+            currentPage += direction;
+            displayFAQs();
+        }
+
+        function filterFAQs() {
+            currentPage = 1; // Reset to the first page on new search
+            displayFAQs();
+        }
+
+        // Initialize display on page load
+        displayFAQs();
+    </script>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - Stinky Phishing Detector</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+      /* General Reset */
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+      }
+
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f4f4f4;
+          color: #333;
+      }
+
+      /* Container for Sidebar and Main Content */
+      .container {
+          display: flex;
+          height: 100vh;
+      }
+
+      /* Main Content Styles */
+      .main-content {
+          flex: 1;
+          padding: 20px;
+          overflow-y: auto;
+          background-color: #fff;
+      }
+
+      header {
+          border-bottom: 2px solid #ffcc00;
+          margin-bottom: 20px;
+      }
+
+      header h1 {
+          font-size: 2em;
+          color: #ffffff;
+      }
+
+      /* About Us Content Styles */
+      .about-us-content h2 {
+          font-size: 1.5em;
+          margin: 20px 0 10px;
+          color: #292b2c;
+      }
+
+      .about-us-content p {
+          line-height: 1.6;
+          margin-bottom: 15px;
+      }
+
+      .about-us-content ul {
+          margin-left: 20px;
+          list-style-type: disc;
+      }
+
+      /* Team Styles */
+      .team {
+          display: flex;
+          gap: 20px;
+          margin: 20px 0;
+      }
+
+      .team-member {
+          text-align: center;
+      }
+
+      .team-member img {
+          width: 100px; /* Adjust as necessary */
+          height: 100px; /* Adjust as necessary */
+          border-radius: 50%; /* This makes the image circular */
+          object-fit: cover; /* Ensures the image covers the area without distortion */
+      }
+
+      /* Blockquote Styles */
+      blockquote {
+          background: #f9f9f9;
+          border-left: 5px solid #ffcc00;
+          padding: 10px 15px;
+          margin: 20px 0;
+          font-style: italic;
+      }
+
+      blockquote cite {
+          display: block;
+          margin-top: 5px;
+          font-size: 0.9em;
+          color: #666;
+      }
+
+      /* Contact and Join Us Sections */
+      .about-us-content a {
+          color: #ffcc00;
+          text-decoration: none;
+      }
+
+      .about-us-content a:hover {
+          text-decoration: underline;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+          .container {
+              flex-direction: column;
+          }
+
+          .main-content {
+              padding: 10px;
+          }
+
+          .team {
+              flex-direction: column; /* Stack team members vertically on small screens */
+          }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="sidebar" id="sidebar">
+        <div class="profile">
+          <img src="icons/logo.jpeg" alt="Profile Image" class="profile-img">
+          <h2>Stinky</h2>
+        </div>
+        
+        <ul class="menu">
+          <li><a href="dashboard.html"><i class="fas fa-tachometer-alt"></i>Dashboard</a></li>
+          
+          <!-- Settings Header -->
+          <h3>Settings</h3>
+          <li><a href="history.html"><i class="fas fa-history"></i>History</a></li>
+          <li><a href="blocked.html"><i class="fas fa-ban"></i>Blocked</a></li>
+        </ul>
+        
+        <ul class="submenu">
+          <!-- Helps Header -->
+          <h3>Help</h3>
+          <li><a href="about us.html"><i class="fas fa-info-circle"></i>About Us</a></li>
+          <li><a href="faqs.html"><i class="fas fa-question-circle"></i>FAQs</a></li>
+        </ul>
+      </div>
+      <div class="main-content">
+        <header>
+          <h1>About Us</h1>
+        </header>
+
+        <div class="about-us-content">
+          <h2>Our Mission</h2>
+          <p>
+            At Stinky Solutions, our mission is to deliver high-quality spam
+            detection services, protecting users from phishing and unwanted
+            emails.
+          </p>
+
+          <h2>Our Values</h2>
+          <p>
+            We believe in transparency, innovation, and commitment to our users.
+            Our goal is to provide a safe and efficient online environment for
+            everyone.
+          </p>
+
+          <h2>Our History</h2>
+          <p>
+            Founded in 2023, Stinky Solutions started as a small startup with a
+            vision to make online communication safer. Through dedication and
+            hard work, we've grown into a trusted provider of spam detection
+            services.
+          </p>
+
+          <h2>Team</h2>
+          <div class="team">
+            <div class="team-member">
+              <img src="images/lecyo.jpg" alt="lecyo" />
+              <p>Leonard Leyco - fnfghh</p>
+            </div>
+            <div class="team-member">
+              <img src="images/karen.jpg" alt="karen" />
+              <p>Karen Samarita - jkkcf</p>
+            </div>
+            <div class="team-member">
+              <img src="images/joan.jpg" alt="joan" />
+              <p>Joan Fajardo - kfsr</p>
+            </div>
+          </div>
+
+          <h2>What Our Users Say</h2>
+          <blockquote>
+            <p>
+              "Stinky Solutions has transformed the way I handle emails. I feel
+              safer knowing that their technology protects me from phishing
+              attempts!"
+            </p>
+            <cite>- A Satisfied User</cite>
+          </blockquote>
+
+          <h2>Contact Us</h2>
+          <p>
+            Email:
+            <a href="mailto:info@stinkysolutions.com">info@stinkysolutions.com</a>
+          </p>
+          <h2>Additional Information</h2>
+          <p>
+            Our team is committed to constant improvement, and we’re excited to
+            bring new updates and innovations to spam detection. Stay tuned!
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
